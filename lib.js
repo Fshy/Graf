@@ -44,7 +44,7 @@ class Lib {
             if (!body.items[0]) return;
             let res = body.items[0]
             songQueue.push(res)
-            console.log(`Queued: ${poppedSong.snippet.title}`);
+            console.log(`Queued: ${res.snippet.title}`);
             if (!broadcast.currentTranscoder){
               var poppedSong = songQueue.pop()
               broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
