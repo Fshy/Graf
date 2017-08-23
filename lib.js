@@ -1,5 +1,4 @@
 const _             = require('lodash')
-const clc           = require('cli-color')
 const path          = require('path')
 const request       = require('request')
 const Discord       = require('discord.js')
@@ -16,6 +15,19 @@ class Embed {
 
 class Lib {
 
+  queueSong(){
+    if (songQueue.length>0) {
+      var poppedSong = songQueue.pop();
+      client.setTimeout(function () {
+        broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
+        client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
+      }, 250);
+    }else {
+      // client.user.setPresence({ game: null })
+      // clear everything
+    }
+  }
+
   play(message){
     if (message) {
       let match = message.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
@@ -30,10 +42,12 @@ class Lib {
             body = JSON.parse(body);
             if (!body.items[0]) return;
             let res = body.items[0]
-            let stream = ytdl(res.id.videoId, {
-              filter : 'audioonly'
-            })
-            broadcast.playStream(stream, streamOptions)
+            songQueue.push(res)
+            if (!broadcast.currentTranscoder){
+              var poppedSong = songQueue.pop()
+              broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
+              client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
+            }
           }else {
             console.log(`Could not access YouTube API`);
           }
@@ -52,7 +66,7 @@ class Lib {
         // for (var x = voiceChannel.name.length+1; x < 38; x++) padding+=' '
         // return message.channel.send(lib.embed(`**ERROR:** Insufficient permissions\n\`\`\`${voiceChannel.name} ${padding}Speak ${voiceChannel.speakable ? '✔':'✘'} | Join ${voiceChannel.joinable ? '✔':'✘'}\`\`\``,message))
       }else {
-        return message.member.voiceChannel.join()
+        message.member.voiceChannel.join().then(connection => {connection.playBroadcast(broadcast)})
       }
     }else {
       message.channel.send(new Embed(`**ERROR:** User is not connected to a Voice Channel`,message))

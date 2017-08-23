@@ -1,6 +1,6 @@
 {
   "name": "graf",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/Fshy/Graf#readme",
   "dependencies": {
-    "cli-color": "^1.2.0",
     "discord.js": "^11.1.0",
     "ejs": "^2.5.7",
     "erlpack": "github:hammerandchisel/erlpack",

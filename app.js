@@ -1,5 +1,4 @@
 const _         = require('lodash')
-const clc       = require('cli-color')
 const path      = require('path')
 const request   = require('request')
 const Discord   = require('discord.js')
@@ -16,21 +15,29 @@ const io        = require('socket.io')(server)
 const PORT      = config.port
 
 global.client    = new Discord.Client()
-var msgArr = []
+global.songQueue = []
+global.msgArr = []
 
 client.login(config.token)
 
 client.on('ready', () => {
   global.broadcast = client.createVoiceBroadcast()
-  console.log(clc.magentaBright(`${config.name} Startup // `)+`Connected to Discord`)
+  console.log(`\n\x1b[35m\x1b[1m${config.name} Startup //\x1b[0m Connected to Discord`)
+  broadcast.on('end', ()=>{
+    console.log(songQueue);
+    lib.queueSong()
+  })
 })
+
 
 client.on('message', (message) => {
   if(message.author.bot) return
   let trigger = config.name.toLowerCase()
   if(!message.content.toLowerCase().match(trigger) && !message.mentions.users.get(client.user.id)) return
-  if (message.content.toLowerCase().match(/join/)) return lib.join(message).then(connection => {connection.playBroadcast(broadcast)})
+  if (message.content.toLowerCase().match(/join/)) return lib.join(message)
   if (message.content.toLowerCase().match(/leave/)) return lib.leave(message)
+  if (message.content.toLowerCase().match(/skip/)) broadcast.emit('end')
+  return lib.join(message)
 })
 
 client.on('voiceStateUpdate', (oldMember,newMember) => {
@@ -55,6 +62,10 @@ io.on('connection', function(socket){
       msgArr.shift()
     msgArr.push(`<span style="color:#000">[${new Date(Date.now()).toLocaleString()}]</span> ${msg}<br>`)
     lib.play(msg)
+    // TODO update game presence
+    // TODO push front end np stats
+    // TODO song queue
+    // TODO invite link on front end
     io.emit('chatArr', msgArr)
   })
 })
@@ -73,7 +84,7 @@ app.use('/', router)
 
 server.listen(PORT, function () {
   request(`http://myexternalip.com/raw`, function (e, r, b){
-    console.log(clc.magentaBright(`${config.name} Startup // `)+`Listening on *:${PORT}${!e && r.statusCode===200 ? ` (External IP: ${b.replace(/\r?\n|\r/,'')})`:``}`)
+    console.log(`\n\x1b[35m\x1b[1m${config.name} Startup //\x1b[0m Listening on *:${PORT}${!e && r.statusCode===200 ? ` (External IP: ${b.replace(/\r?\n|\r/,'')})`:``}`)
   })
   msgArr.push(`Server initialized at <span style="color:#000">${new Date(Date.now()).toLocaleString()}</span><br>`)
 })

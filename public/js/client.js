@@ -28,7 +28,6 @@ $(window).load(function() {
 $(function () {
   var socket = io();
   $('form').submit(function(){
-    console.log($('#m').val());
     socket.emit('chatMsg', $('#m').val());
     $('#m').val('');
     return false;
