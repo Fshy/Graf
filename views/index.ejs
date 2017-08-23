@@ -17,11 +17,11 @@
       <div class="sak"></div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div style="height:150px;" data-vide-bg="img/blossoms" data-vide-options="position: 0% 0%"></div>
+      <div style="height:150px;opacity:0.5" data-vide-bg="img/blossoms" data-vide-options="position: 0% 0%"></div>
       <div id="preloader">
           <div id="status">&nbsp;</div>
       </div>
-      <div style="position: absolute;color: #fff;left: 20%;top: 50px;">
+      <div style="position: absolute;color: #fff;left: 35%;top: 50px;">
         <a href="/"><h1 style="font-size:48px;display:inline;color:#fff;">☩ Graf ☩</h1></a>
         <h3 style="display:inline;"> | Dashboard</h3>
 
@@ -32,8 +32,16 @@
 
        <div class="col-sm-3" id="leftImg"></div>
        <div class="col-sm-6">
-
-         <p id="messages" style="min-height:660px;background-color:#efe1e4;color:#af3753;padding:30px;list-style-type:none;border-radius:3px"></p>
+          <div class="row" style="background-color:#d8c3cc;border-radius:3px;padding:10px;color:#fff;max-height: 120px;color:#5a5354">
+            <div class="col-sm-2" style="vertical-align: middle;">
+              <img src="img/default_thumb.png" id="npThumb" alt="" style="border-radius: 3px;width:144px;height:80px;">
+            </div>
+            <div class="col-sm-9" style="margin-left:20px">
+              <h5><i class="material-icons">volume_up</i> Now Playing</h5>
+              <h6 id="npTitle">// Nothing right now!</h6>
+            </div>
+          </div>
+         <p id="messages" style="min-height:540px;background-color:#efe1e4;color:#af3753;padding:30px;list-style-type:none;border-radius:3px"></p>
          <form action="">
           <div class="row">
           <div class="input-field col s12" style="  ">

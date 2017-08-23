@@ -11,7 +11,7 @@ const app       = express()
 const router    = express.Router()
 
 const server    = require('http').createServer(app)
-const io        = require('socket.io')(server)
+global.io       = require('socket.io')(server)
 const PORT      = config.port
 
 global.client    = new Discord.Client()
@@ -24,7 +24,6 @@ client.on('ready', () => {
   global.broadcast = client.createVoiceBroadcast()
   console.log(`\n\x1b[35m\x1b[1m${config.name} Startup //\x1b[0m Connected to Discord`)
   broadcast.on('end', ()=>{
-    console.log(songQueue);
     lib.queueSong()
   })
 })
@@ -58,7 +57,7 @@ client.on('voiceStateUpdate', (oldMember,newMember) => {
 io.on('connection', function(socket){
   io.emit('chatArr', msgArr)
   socket.on('chatMsg', function(msg){
-    if (msgArr.length>=30)
+    if (msgArr.length>=24)
       msgArr.shift()
     msgArr.push(`<span style="color:#000">[${new Date(Date.now()).toLocaleString()}]</span> ${msg}<br>`)
     lib.play(msg)

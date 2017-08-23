@@ -35,4 +35,8 @@ $(function () {
   socket.on('chatArr', function(msg){
     $('#messages').html(msg);
   });
+  socket.on('npInfo', function(np){
+    $('#npThumb').attr("src",np.thumb);
+    $('#npTitle').text(np.title);
+  });
 });

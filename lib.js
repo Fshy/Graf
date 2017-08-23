@@ -23,7 +23,8 @@ class Lib {
         client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
       }, 250);
     }else {
-      // client.user.setPresence({ game: null })
+      client.user.setPresence({ game: null })
+      io.emit('npInfo', {title:`// Nothing right now!`,thumb:`img/default_thumb.png`})
       // clear everything
     }
   }
@@ -42,10 +43,12 @@ class Lib {
             body = JSON.parse(body);
             if (!body.items[0]) return;
             let res = body.items[0]
+            console.log(res);
             songQueue.push(res)
             if (!broadcast.currentTranscoder){
               var poppedSong = songQueue.pop()
               broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
+              io.emit('npInfo', {title:poppedSong.snippet.title,thumb:poppedSong.snippet.thumbnails.default.url})
               client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
             }
           }else {
