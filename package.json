@@ -1,0 +1,30 @@
+{
+  "name": "graf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fshy/Graf.git"
+  },
+  "author": "Fshy <fshy@arc.moe> (http://arc.moe/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fshy/Graf/issues"
+  },
+  "homepage": "https://github.com/Fshy/Graf#readme",
+  "dependencies": {
+    "cli-color": "^1.2.0",
+    "discord.js": "^11.1.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "lodash": "^4.17.4",
+    "node-opus": "^0.2.6",
+    "request": "^2.81.0",
+    "socket.io": "^2.0.3",
+    "ytdl-core": "^0.16.0"
+  }
+}

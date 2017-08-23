@@ -1,0 +1,9 @@
+{
+  "port":     3000,
+  "token":    "DISCORD_USER_TOKEN",
+  "name":     "Graf",
+  "hexColour":"#ECBCD1",
+  "keys": {
+    "youtube":"YOUTUBE_API_KEY"
+  }
+}

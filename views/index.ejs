@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>☩ Graf ☩ | Dashboard</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/materialize.min.css">
+        <link rel="stylesheet" href="css/jquery-sakura.min.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+      <div class="sak"></div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div style="height:150px;" data-vide-bg="img/blossoms" data-vide-options="position: 0% 0%"></div>
+      <div id="preloader">
+          <div id="status">&nbsp;</div>
+      </div>
+      <div style="position: absolute;color: #fff;left: 20%;top: 50px;">
+        <a href="/"><h1 style="font-size:48px;display:inline;color:#fff;">☩ Graf ☩</h1></a>
+        <h3 style="display:inline;"> | Dashboard</h3>
+
+      </div>
+
+      <!-- Example row of columns -->
+      <div style="margin: 20px 20px 0px 20px;min-height:100%">
+
+       <div class="col-md-3" id="leftImg"></div>
+       <div class="col-md-6">
+
+         <p id="messages" style="min-height:660px;background-color:#efe1e4;color:#af3753;padding:30px;list-style-type:none;border-radius:3px"></p>
+         <form action="">
+          <div class="row">
+          <div class="input-field col s12" style="  ">
+            <input id="m" type="text" autofocus autocomplete="off">
+            <label for="m">Send Message</label>
+          </div>
+        </div>
+         </form>
+
+       </div>
+       <div class="col-md-3" id="rightImg"></div>
+      </div>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/materialize.min.js"></script>
+      <script src="js/jquery.vide.js"></script>
+      <script src="js/jquery-sakura.min.js"></script>
+      <script src="/socket.io/socket.io.js" ></script>
+      <script src="js/client.js"></script>
+    </body>
+</html>
