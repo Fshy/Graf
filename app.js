@@ -17,6 +17,7 @@ const PORT      = config.port
 global.client    = new Discord.Client()
 global.songQueue = []
 global.msgArr = []
+global.np = {title:`// Nothing right now!`,thumb:`img/default_thumb.png`}
 
 client.login(config.token)
 
@@ -56,16 +57,10 @@ client.on('voiceStateUpdate', (oldMember,newMember) => {
 
 io.on('connection', function(socket){
   io.emit('chatArr', msgArr)
+  io.emit('npInfo', np)
   socket.on('chatMsg', function(msg){
-    if (msgArr.length>=24)
-      msgArr.shift()
-    msgArr.push(`<span style="color:#000">[${new Date(Date.now()).toLocaleString()}]</span> ${msg}<br>`)
+    chatMsg(msg)
     lib.play(msg)
-    // TODO update game presence
-    // TODO push front end np stats
-    // TODO song queue
-    // TODO invite link on front end
-    io.emit('chatArr', msgArr)
   })
 })
 
@@ -85,5 +80,5 @@ server.listen(PORT, function () {
   request(`http://myexternalip.com/raw`, function (e, r, b){
     console.log(`\n\x1b[35m\x1b[1m${config.name} Startup //\x1b[0m Listening on *:${PORT}${!e && r.statusCode===200 ? ` (External IP: ${b.replace(/\r?\n|\r/,'')})`:``}`)
   })
-  msgArr.push(`Server initialized at <span style="color:#000">${new Date(Date.now()).toLocaleString()}</span><br>`)
+  msgArr.push(serverMsg(`Server initialized at ${new Date(Date.now()).toLocaleString()}`))
 })

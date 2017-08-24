@@ -7,10 +7,22 @@ const config        = require('./config')
 
 const streamOptions = {passes:2, volume:0.15}
 
-class Embed {
-  constructor(text,message) {
-    return ({embed:new Discord.RichEmbed().setDescription(text).setColor(`${message.guild.me.displayHexColor!=='#000000' ? message.guild.me.displayHexColor : config.hexColour}`)});
-  }
+global.embedMsg = function (text,message) {
+  return ({embed:new Discord.RichEmbed().setDescription(text).setColor(`${message.guild.me.displayHexColor!=='#000000' ? message.guild.me.displayHexColor : config.hexColour}`)});
+}
+
+global.chatMsg = function (msg) {
+  if (msgArr.length>=24)
+    msgArr.shift()
+  msgArr.push(`<span style="color:#000">[${new Date(Date.now()).toLocaleString()}]</span> ${msg}<br>`)
+  io.emit('chatArr', msgArr)
+}
+
+global.serverMsg = function (msg) {
+  if (msgArr.length>=24)
+    msgArr.shift()
+  msgArr.push(`<span style="color:#848484">📡 ${msg}</span><br>`)
+  io.emit('chatArr', msgArr)
 }
 
 class Lib {
@@ -24,7 +36,8 @@ class Lib {
       }, 250);
     }else {
       client.user.setPresence({ game: null })
-      io.emit('npInfo', {title:`// Nothing right now!`,thumb:`img/default_thumb.png`})
+      np = {title:`// Nothing right now!`,thumb:`img/default_thumb.png`}
+      io.emit('npInfo', np)
       // clear everything
     }
   }
@@ -44,11 +57,13 @@ class Lib {
             if (!body.items[0]) return;
             let res = body.items[0]
             songQueue.push(res)
-            console.log(`Queued: ${res.snippet.title}`);
+            serverMsg(`Queued: ${res.snippet.title}`)
+            // console.log(`📡 Queued: ${res.snippet.title}`);
             if (!broadcast.currentTranscoder){
               var poppedSong = songQueue.pop()
               broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
-              io.emit('npInfo', {title:poppedSong.snippet.title,thumb:poppedSong.snippet.thumbnails.default.url})
+              np = {title:poppedSong.snippet.title,thumb:poppedSong.snippet.thumbnails.default.url}
+              io.emit('npInfo', np)
               client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
             }
           }else {
@@ -72,7 +87,7 @@ class Lib {
         message.member.voiceChannel.join().then(connection => {connection.playBroadcast(broadcast)})
       }
     }else {
-      message.channel.send(new Embed(`**ERROR:** User is not connected to a Voice Channel`,message))
+      message.channel.send(embedMsg(`**ERROR:** User is not connected to a Voice Channel`,message))
     }
   }
 
