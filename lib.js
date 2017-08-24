@@ -29,7 +29,10 @@ class Lib {
 
   queueSong(){
     if (songQueue.length>0) {
-      var poppedSong = songQueue.pop();
+      var poppedSong = songQueue.shift();
+      np = {title:poppedSong.snippet.title,thumb:poppedSong.snippet.thumbnails.default.url}
+      io.emit('npInfo', np)
+      io.emit('songQueue', songQueue)
       client.setTimeout(function () {
         broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
         client.user.setPresence({ game: { name: `${poppedSong.snippet.title}`, type: 0 } })
@@ -57,10 +60,12 @@ class Lib {
             if (!body.items[0]) return;
             let res = body.items[0]
             songQueue.push(res)
+            io.emit('songQueue', songQueue)
             serverMsg(`Queued: ${res.snippet.title}`)
             // console.log(`📡 Queued: ${res.snippet.title}`);
             if (!broadcast.currentTranscoder){
               var poppedSong = songQueue.pop()
+              io.emit('songQueue', songQueue)
               broadcast.playStream(ytdl(poppedSong.id.videoId, {filter : 'audioonly'}), streamOptions)
               np = {title:poppedSong.snippet.title,thumb:poppedSong.snippet.thumbnails.default.url}
               io.emit('npInfo', np)

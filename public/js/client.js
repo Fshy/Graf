@@ -39,4 +39,11 @@ $(function () {
     $('#npThumb').attr("src",np.thumb);
     $('#npTitle').text(np.title);
   });
+  socket.on('songQueue', function(queue){
+    var msg = ``;
+    for (var i = 0; i < queue.length; i++) {
+      msg += `<p style="white-space:nowrap;overflow:hidden;">${i+1}) ${queue[i].snippet.title}</p><hr>`;
+    }
+    $('#songqueue').html(msg);
+  });
 });

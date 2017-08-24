@@ -58,6 +58,7 @@ client.on('voiceStateUpdate', (oldMember,newMember) => {
 io.on('connection', function(socket){
   io.emit('chatArr', msgArr)
   io.emit('npInfo', np)
+  io.emit('songQueue', songQueue)
   socket.on('chatMsg', function(msg){
     chatMsg(msg)
     lib.play(msg)
