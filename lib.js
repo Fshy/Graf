@@ -12,14 +12,14 @@ global.embedMsg = function (text,message) {
 }
 
 global.chatMsg = function (msg) {
-  if (msgArr.length>=24)
+  if (msgArr.length>=23)
     msgArr.shift()
   msgArr.push(`<span style="color:#000">[${new Date(Date.now()).toLocaleString()}]</span> ${msg}<br>`)
   io.emit('chatArr', msgArr)
 }
 
 global.serverMsg = function (msg) {
-  if (msgArr.length>=24)
+  if (msgArr.length>=23)
     msgArr.shift()
   msgArr.push(`<span style="color:#848484">📡 ${msg}</span><br>`)
   io.emit('chatArr', msgArr)

@@ -41,7 +41,7 @@ $(function () {
   });
   socket.on('songQueue', function(queue){
     var msg = ``;
-    for (var i = 0; i < queue.length; i++) {
+    for (var i = 0; i < queue.length && i<8; i++) {
       msg += `<p style="white-space:nowrap;overflow:hidden;">${i+1}) ${queue[i].snippet.title}</p><hr>`;
     }
     $('#songqueue').html(msg);

@@ -50,7 +50,7 @@ h2 {
   filter:hue-rotate(110deg) opacity(.7) brightness(1.6);
 }
 
-/*#leftImg{
+#leftImg{
   background-image: url("/img/graf1.png");
   min-height: 600px;
   background-size: 100%;
@@ -62,18 +62,18 @@ h2 {
   min-height: 600px;
   background-size: 100%;
   background-repeat: no-repeat;
-}*/
+}
 
-#leftImg{
+/*#leftImg{
   background-image: url("/img/graf1.png");
-  /*background-repeat: no-repeat;*/
+  background-repeat: no-repeat;
 }
 
 #rightImg{
-  /*background-image: url("/img/graf2.png");*/
-  /*width: 25%;*/
-  /*background-repeat: no-repeat;*/
-}
+  background-image: url("/img/graf2.png");
+  width: 25%;
+  background-repeat: no-repeat;
+}*/
 
 /* label color */
  .input-field label {
